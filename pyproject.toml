@@ -1,5 +1,9 @@
 # Declares the Python version and direct dependencies used to develop the data platform.
 
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 [project]
 name = "ffguru"
 version = "0.1.0"
@@ -8,6 +12,13 @@ readme = "README.md"
 requires-python = ">=3.12,<3.13"
 dependencies = [
     "apache-airflow==3.3.1",
+    "boto3==1.43.56",
+    "nflreadpy>=0.1,<1",
+]
+
+[tool.uv]
+constraint-dependencies = [
+    "botocore==1.43.56",
 ]
 
 [dependency-groups]

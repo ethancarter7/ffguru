@@ -1,3 +1,3 @@
 # Airflow DAGs
 
-Python workflow definitions live here and are mounted into the Airflow containers. `airflow_learning.py` is a manual two-task workflow used to explore the UI before adding external data sources.
+Python workflow definitions live here and are mounted into the Airflow containers. `airflow_learning.py` demonstrates task dependencies, while `ff_rankings.py` snapshots draft rankings into the bronze bucket each day.

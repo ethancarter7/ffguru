@@ -27,8 +27,8 @@ The first checkpoint runs two persistent services and one setup task:
 The Compose file has development defaults, so an environment file is optional. To customize the credentials, copy `.env.example` to `.env` and edit the copy.
 
 ```bash
-docker compose up -d
-docker compose ps
+make up
+make status
 ```
 
 Open the MinIO console at [http://localhost:9001](http://localhost:9001). With the defaults, sign in with `minioadmin` for both the username and password.
@@ -46,7 +46,7 @@ Postgres listens on `localhost:5433` because another local Docker project alread
 ### Stop the services
 
 ```bash
-docker compose down
+make down
 ```
 
 Named volumes preserve stored data when the containers stop. `docker compose down --volumes` also deletes that data, so do not use that option unless you intend to reset the environment.

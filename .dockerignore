@@ -1,0 +1,8 @@
+# Keeps local and generated files out of the Docker build context.
+
+.env
+.git/
+.venv/
+__pycache__/
+*.py[cod]
+airflow_logs/
