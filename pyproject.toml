@@ -1,0 +1,20 @@
+# Declares the Python version and direct dependencies used to develop the data platform.
+
+[project]
+name = "ffguru"
+version = "0.1.0"
+description = "A learning-focused data platform for fantasy-football research."
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "apache-airflow==3.3.1",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.12,<1",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"

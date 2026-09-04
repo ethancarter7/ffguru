@@ -1,0 +1,7 @@
+# Excludes local secrets and generated operating-system files from version control.
+
+.env
+.venv/
+.DS_Store
+__pycache__/
+*.py[cod]
