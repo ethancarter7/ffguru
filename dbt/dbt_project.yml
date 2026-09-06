@@ -1,0 +1,19 @@
+# Defines the dbt project and its model-layer defaults.
+
+name: ffguru
+version: "1.0.0"
+config-version: 2
+
+profile: ffguru
+
+model-paths: ["models"]
+clean-targets:
+  - "/opt/airflow/data/dbt_target"
+
+models:
+  ffguru:
+    silver:
+      staging:
+        +materialized: view
+      intermediate:
+        +materialized: view

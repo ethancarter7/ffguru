@@ -1,0 +1,21 @@
+# Documents and tests the latest overall redraft ranking model.
+
+version: 2
+
+models:
+  - name: int_ff_rankings__latest_redraft
+    description: Most recent overall redraft ECR rankings and expert rank range.
+    columns:
+      - name: snapshot_date
+        description: Latest available ingestion snapshot date.
+        data_tests:
+          - not_null
+      - name: player_id
+        description: FantasyPros identifier supplied with the ranking.
+        data_tests:
+          - not_null
+          - unique
+      - name: player
+        description: Player or team-defense name supplied by the ranking source.
+        data_tests:
+          - not_null

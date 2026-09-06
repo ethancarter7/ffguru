@@ -1,0 +1,266 @@
+[0m01:27:33.703010 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0xffff96858e30>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0xffff978c08c0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0xffff974b2180>]}
+
+
+============================== 01:27:33.746230 | 56015f4e-0d48-4c25-b223-fbbf9b84c5c4 ==============================
+[0m01:27:33.746230 [info ] [MainThread]: Running with dbt=1.12.3
+[0m01:27:33.746824 [debug] [MainThread]: running dbt with arguments {'log_format': 'default', 'version_check': 'True', 'use_colors': 'True', 'no_print': 'None', 'write_json': 'True', 'introspect': 'True', 'hints_enabled': 'True', 'invocation_command': 'dbt build --project-dir /opt/airflow/dbt --profiles-dir /opt/airflow/dbt', 'use_experimental_parser': 'False', 'log_cache_events': 'False', 'quiet': 'False', 'empty': 'False', 'cache_selected_only': 'False', 'send_anonymous_usage_stats': 'True', 'fail_fast': 'False', 'log_path': '/opt/airflow/dbt/logs', 'warn_error': 'None', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'target_path': '/opt/airflow/data/dbt_target', 'maximum_seed_size_mib': '1', 'profiles_dir': '/opt/airflow/dbt', 'indirect_selection': 'eager', 'partial_parse': 'True', 'debug': 'False', 'printer_width': '80', 'static_parser': 'True'}
+[0m01:27:34.125129 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '56015f4e-0d48-4c25-b223-fbbf9b84c5c4', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0xffff97c42ff0>]}
+[0m01:27:34.168748 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '56015f4e-0d48-4c25-b223-fbbf9b84c5c4', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0xffff967886b0>]}
+[0m01:27:34.170564 [info ] [MainThread]: Registered adapter: duckdb=1.11.0
+[0m01:27:34.228023 [debug] [MainThread]: checksum: bea29a3eb73657660bf708f1dcf3b47592bcf569f5925e01f8d72352a214a7a9, vars: {}, profile: ffguru, target: dev, version: 1.12.3
+[0m01:27:34.316997 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m01:27:34.317327 [debug] [MainThread]: Nothing changed, skipping partial parsing.
+[0m01:27:34.317510 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m01:27:34.323776 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '56015f4e-0d48-4c25-b223-fbbf9b84c5c4', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0xffff96213080>]}
+[0m01:27:34.463382 [debug] [MainThread]: Wrote artifact WritableManifest to /opt/airflow/data/dbt_target/manifest.json
+[0m01:27:34.477597 [debug] [MainThread]: Wrote artifact SemanticManifest to /opt/airflow/data/dbt_target/semantic_manifest.json
+[0m01:27:34.511761 [debug] [MainThread]: Wrote artifact OsiDocument to /opt/airflow/data/dbt_target/osi_document.json
+[0m01:27:34.588209 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '56015f4e-0d48-4c25-b223-fbbf9b84c5c4', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0xffff92d0d2b0>]}
+[0m01:27:34.588953 [info ] [MainThread]: Found 1 model, 2 data tests, 1 source, 500 macros
+[0m01:27:34.592634 [info ] [MainThread]: 
+[0m01:27:34.593167 [info ] [MainThread]: Concurrency: 4 threads (target='dev')
+[0m01:27:34.593552 [info ] [MainThread]: 
+[0m01:27:34.594986 [debug] [MainThread]: Acquiring new duckdb connection 'master'
+[0m01:27:34.596032 [debug] [ThreadPool]: Acquiring new duckdb connection 'list_ffguru'
+[0m01:27:34.651225 [debug] [ThreadPool]: Using duckdb connection "list_ffguru"
+[0m01:27:34.652379 [debug] [ThreadPool]: On list_ffguru: /* {"app": "dbt", "dbt_version": "1.12.3", "profile_name": "ffguru", "target_name": "dev", "connection_name": "list_ffguru"} */
+
+    
+    select schema_name
+    from system.information_schema.schemata
+    
+    where lower(catalog_name) = '"ffguru"'
+    
+  
+  
+[0m01:27:34.653193 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m01:27:35.288982 [debug] [ThreadPool]: SQL status: OK in 0.635 seconds
+[0m01:27:35.292837 [debug] [ThreadPool]: On list_ffguru: Close
+[0m01:27:35.295517 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_ffguru, now create_ffguru_silver)
+[0m01:27:35.297301 [debug] [ThreadPool]: Creating schema "database: "ffguru"
+schema: "silver"
+"
+[0m01:27:35.306567 [debug] [ThreadPool]: Using duckdb connection "create_ffguru_silver"
+[0m01:27:35.307096 [debug] [ThreadPool]: On create_ffguru_silver: /* {"app": "dbt", "dbt_version": "1.12.3", "profile_name": "ffguru", "target_name": "dev", "connection_name": "create_ffguru_silver"} */
+
+    
+        select type from duckdb_databases()
+        where lower(database_name)='ffguru'
+        and type != 'duckdb'
+    
+  
+[0m01:27:35.307446 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m01:27:35.309230 [debug] [ThreadPool]: SQL status: OK in 0.002 seconds
+[0m01:27:35.310559 [debug] [ThreadPool]: Using duckdb connection "create_ffguru_silver"
+[0m01:27:35.310870 [debug] [ThreadPool]: On create_ffguru_silver: BEGIN
+[0m01:27:35.311401 [debug] [ThreadPool]: SQL status: OK in 0.000 seconds
+[0m01:27:35.311648 [debug] [ThreadPool]: Using duckdb connection "create_ffguru_silver"
+[0m01:27:35.311870 [debug] [ThreadPool]: On create_ffguru_silver: /* {"app": "dbt", "dbt_version": "1.12.3", "profile_name": "ffguru", "target_name": "dev", "connection_name": "create_ffguru_silver"} */
+
+    
+    
+        create schema if not exists "ffguru"."silver"
+    
+[0m01:27:35.312415 [debug] [ThreadPool]: SQL status: OK in 0.000 seconds
+[0m01:27:35.313126 [debug] [ThreadPool]: On create_ffguru_silver: COMMIT
+[0m01:27:35.313407 [debug] [ThreadPool]: Using duckdb connection "create_ffguru_silver"
+[0m01:27:35.313614 [debug] [ThreadPool]: On create_ffguru_silver: COMMIT
+[0m01:27:35.314116 [debug] [ThreadPool]: SQL status: OK in 0.000 seconds
+[0m01:27:35.314358 [debug] [ThreadPool]: On create_ffguru_silver: Close
+[0m01:27:35.316013 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly create_ffguru_silver, now list_ffguru_silver)
+[0m01:27:35.319471 [debug] [ThreadPool]: Using duckdb connection "list_ffguru_silver"
+[0m01:27:35.319753 [debug] [ThreadPool]: On list_ffguru_silver: BEGIN
+[0m01:27:35.319944 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m01:27:35.320541 [debug] [ThreadPool]: SQL status: OK in 0.001 seconds
+[0m01:27:35.320789 [debug] [ThreadPool]: Using duckdb connection "list_ffguru_silver"
+[0m01:27:35.321023 [debug] [ThreadPool]: On list_ffguru_silver: /* {"app": "dbt", "dbt_version": "1.12.3", "profile_name": "ffguru", "target_name": "dev", "connection_name": "list_ffguru_silver"} */
+select
+      'ffguru' as database,
+      table_name as name,
+      table_schema as schema,
+      CASE table_type
+        WHEN 'BASE TABLE' THEN 'table'
+        WHEN 'VIEW' THEN 'view'
+        WHEN 'LOCAL TEMPORARY' THEN 'table'
+        END as type
+    from system.information_schema.tables
+    where lower(table_schema) = 'silver'
+    and lower(table_catalog) = 'ffguru'
+  
+[0m01:27:35.323593 [debug] [ThreadPool]: SQL status: OK in 0.002 seconds
+[0m01:27:35.324669 [debug] [ThreadPool]: On list_ffguru_silver: ROLLBACK
+[0m01:27:35.325080 [debug] [ThreadPool]: On list_ffguru_silver: Close
+[0m01:27:35.325852 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '56015f4e-0d48-4c25-b223-fbbf9b84c5c4', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0xffff96212b10>]}
+[0m01:27:35.326285 [debug] [MainThread]: Using duckdb connection "master"
+[0m01:27:35.326499 [debug] [MainThread]: On master: BEGIN
+[0m01:27:35.326683 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m01:27:35.327626 [debug] [MainThread]: SQL status: OK in 0.001 seconds
+[0m01:27:35.327908 [debug] [MainThread]: On master: COMMIT
+[0m01:27:35.328106 [debug] [MainThread]: Using duckdb connection "master"
+[0m01:27:35.328285 [debug] [MainThread]: On master: COMMIT
+[0m01:27:35.328556 [debug] [MainThread]: SQL status: OK in 0.000 seconds
+[0m01:27:35.328770 [debug] [MainThread]: On master: Close
+[0m01:27:35.332815 [debug] [Thread-1 (]: Began running node model.ffguru.stg_nflverse__ff_rankings
+[0m01:27:35.333261 [info ] [Thread-1 (]: 1 of 3 START sql view model silver.stg_nflverse__ff_rankings ................... [RUN]
+[0m01:27:35.333805 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly list_ffguru_silver, now model.ffguru.stg_nflverse__ff_rankings)
+[0m01:27:35.334396 [debug] [Thread-1 (]: Began compiling node model.ffguru.stg_nflverse__ff_rankings
+[0m01:27:35.345481 [debug] [Thread-1 (]: Writing injected SQL for node "model.ffguru.stg_nflverse__ff_rankings"
+[0m01:27:35.347902 [debug] [Thread-1 (]: Began executing node model.ffguru.stg_nflverse__ff_rankings
+[0m01:27:35.375309 [debug] [Thread-1 (]: Writing runtime sql for node "model.ffguru.stg_nflverse__ff_rankings"
+[0m01:27:35.376781 [debug] [Thread-1 (]: Using duckdb connection "model.ffguru.stg_nflverse__ff_rankings"
+[0m01:27:35.377058 [debug] [Thread-1 (]: On model.ffguru.stg_nflverse__ff_rankings: BEGIN
+[0m01:27:35.377354 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m01:27:35.378029 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m01:27:35.378259 [debug] [Thread-1 (]: Using duckdb connection "model.ffguru.stg_nflverse__ff_rankings"
+[0m01:27:35.378483 [debug] [Thread-1 (]: On model.ffguru.stg_nflverse__ff_rankings: /* {"app": "dbt", "dbt_version": "1.12.3", "profile_name": "ffguru", "target_name": "dev", "node_id": "model.ffguru.stg_nflverse__ff_rankings"} */
+
+  
+  create view "ffguru"."silver"."stg_nflverse__ff_rankings__dbt_tmp" as (
+    -- Creates a silver staging view over every immutable draft-ranking snapshot.
+
+select *
+from read_parquet(
+  's3://bronze/nflverse/ff_rankings/type=draft/snapshot_date=*/ff_rankings.parquet',
+  hive_partitioning = true,
+  union_by_name = true
+)
+  );
+
+[0m01:27:35.420189 [debug] [Thread-1 (]: SQL status: OK in 0.041 seconds
+[0m01:27:35.427599 [debug] [Thread-1 (]: Using duckdb connection "model.ffguru.stg_nflverse__ff_rankings"
+[0m01:27:35.428317 [debug] [Thread-1 (]: On model.ffguru.stg_nflverse__ff_rankings: /* {"app": "dbt", "dbt_version": "1.12.3", "profile_name": "ffguru", "target_name": "dev", "node_id": "model.ffguru.stg_nflverse__ff_rankings"} */
+alter view "ffguru"."silver"."stg_nflverse__ff_rankings" rename to "stg_nflverse__ff_rankings__dbt_backup"
+[0m01:27:35.430354 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m01:27:35.433993 [debug] [Thread-1 (]: Using duckdb connection "model.ffguru.stg_nflverse__ff_rankings"
+[0m01:27:35.435053 [debug] [Thread-1 (]: On model.ffguru.stg_nflverse__ff_rankings: /* {"app": "dbt", "dbt_version": "1.12.3", "profile_name": "ffguru", "target_name": "dev", "node_id": "model.ffguru.stg_nflverse__ff_rankings"} */
+alter view "ffguru"."silver"."stg_nflverse__ff_rankings__dbt_tmp" rename to "stg_nflverse__ff_rankings"
+[0m01:27:35.437131 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m01:27:35.452846 [debug] [Thread-1 (]: On model.ffguru.stg_nflverse__ff_rankings: COMMIT
+[0m01:27:35.453721 [debug] [Thread-1 (]: Using duckdb connection "model.ffguru.stg_nflverse__ff_rankings"
+[0m01:27:35.454361 [debug] [Thread-1 (]: On model.ffguru.stg_nflverse__ff_rankings: COMMIT
+[0m01:27:35.458704 [debug] [Thread-1 (]: SQL status: OK in 0.004 seconds
+[0m01:27:35.463406 [debug] [Thread-1 (]: Using duckdb connection "model.ffguru.stg_nflverse__ff_rankings"
+[0m01:27:35.463905 [debug] [Thread-1 (]: On model.ffguru.stg_nflverse__ff_rankings: /* {"app": "dbt", "dbt_version": "1.12.3", "profile_name": "ffguru", "target_name": "dev", "node_id": "model.ffguru.stg_nflverse__ff_rankings"} */
+
+      drop view if exists "ffguru"."silver"."stg_nflverse__ff_rankings__dbt_backup" cascade
+    
+[0m01:27:35.466356 [debug] [Thread-1 (]: SQL status: OK in 0.002 seconds
+[0m01:27:35.469503 [debug] [Thread-1 (]: On model.ffguru.stg_nflverse__ff_rankings: Close
+[0m01:27:35.477035 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '56015f4e-0d48-4c25-b223-fbbf9b84c5c4', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0xffff96212210>]}
+[0m01:27:35.479844 [info ] [Thread-1 (]: 1 of 3 OK created sql view model silver.stg_nflverse__ff_rankings .............. [[32mOK[0m in 0.14s]
+[0m01:27:35.480956 [debug] [Thread-1 (]: Finished running node model.ffguru.stg_nflverse__ff_rankings
+[0m01:27:35.482753 [debug] [Thread-3 (]: Began running node test.ffguru.not_null_stg_nflverse__ff_rankings_player.dda641e551
+[0m01:27:35.483419 [debug] [Thread-4 (]: Began running node test.ffguru.not_null_stg_nflverse__ff_rankings_snapshot_date.343f3414e5
+[0m01:27:35.484045 [info ] [Thread-3 (]: 2 of 3 START test not_null_stg_nflverse__ff_rankings_player .................... [RUN]
+[0m01:27:35.484531 [info ] [Thread-4 (]: 3 of 3 START test not_null_stg_nflverse__ff_rankings_snapshot_date ............. [RUN]
+[0m01:27:35.486263 [debug] [Thread-3 (]: Acquiring new duckdb connection 'test.ffguru.not_null_stg_nflverse__ff_rankings_player.dda641e551'
+[0m01:27:35.487423 [debug] [Thread-4 (]: Acquiring new duckdb connection 'test.ffguru.not_null_stg_nflverse__ff_rankings_snapshot_date.343f3414e5'
+[0m01:27:35.488006 [debug] [Thread-3 (]: Began compiling node test.ffguru.not_null_stg_nflverse__ff_rankings_player.dda641e551
+[0m01:27:35.488491 [debug] [Thread-4 (]: Began compiling node test.ffguru.not_null_stg_nflverse__ff_rankings_snapshot_date.343f3414e5
+[0m01:27:35.512260 [debug] [Thread-3 (]: Writing injected SQL for node "test.ffguru.not_null_stg_nflverse__ff_rankings_player.dda641e551"
+[0m01:27:35.514480 [debug] [Thread-4 (]: Writing injected SQL for node "test.ffguru.not_null_stg_nflverse__ff_rankings_snapshot_date.343f3414e5"
+[0m01:27:35.516084 [debug] [Thread-4 (]: Began executing node test.ffguru.not_null_stg_nflverse__ff_rankings_snapshot_date.343f3414e5
+[0m01:27:35.516413 [debug] [Thread-3 (]: Began executing node test.ffguru.not_null_stg_nflverse__ff_rankings_player.dda641e551
+[0m01:27:35.535413 [debug] [Thread-3 (]: Writing runtime sql for node "test.ffguru.not_null_stg_nflverse__ff_rankings_player.dda641e551"
+[0m01:27:35.537280 [debug] [Thread-4 (]: Writing runtime sql for node "test.ffguru.not_null_stg_nflverse__ff_rankings_snapshot_date.343f3414e5"
+[0m01:27:35.538782 [debug] [Thread-3 (]: Using duckdb connection "test.ffguru.not_null_stg_nflverse__ff_rankings_player.dda641e551"
+[0m01:27:35.539438 [debug] [Thread-3 (]: On test.ffguru.not_null_stg_nflverse__ff_rankings_player.dda641e551: BEGIN
+[0m01:27:35.539154 [debug] [Thread-4 (]: Using duckdb connection "test.ffguru.not_null_stg_nflverse__ff_rankings_snapshot_date.343f3414e5"
+[0m01:27:35.540047 [debug] [Thread-4 (]: On test.ffguru.not_null_stg_nflverse__ff_rankings_snapshot_date.343f3414e5: BEGIN
+[0m01:27:35.539711 [debug] [Thread-3 (]: Opening a new connection, currently in state init
+[0m01:27:35.540288 [debug] [Thread-4 (]: Opening a new connection, currently in state init
+[0m01:27:35.541997 [debug] [Thread-3 (]: SQL status: OK in 0.002 seconds
+[0m01:27:35.542775 [debug] [Thread-3 (]: Using duckdb connection "test.ffguru.not_null_stg_nflverse__ff_rankings_player.dda641e551"
+[0m01:27:35.542535 [debug] [Thread-4 (]: SQL status: OK in 0.002 seconds
+[0m01:27:35.543318 [debug] [Thread-4 (]: Using duckdb connection "test.ffguru.not_null_stg_nflverse__ff_rankings_snapshot_date.343f3414e5"
+[0m01:27:35.543057 [debug] [Thread-3 (]: On test.ffguru.not_null_stg_nflverse__ff_rankings_player.dda641e551: /* {"app": "dbt", "dbt_version": "1.12.3", "profile_name": "ffguru", "target_name": "dev", "node_id": "test.ffguru.not_null_stg_nflverse__ff_rankings_player.dda641e551"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+
+
+select player
+from "ffguru"."silver"."stg_nflverse__ff_rankings"
+where player is null
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m01:27:35.543571 [debug] [Thread-4 (]: On test.ffguru.not_null_stg_nflverse__ff_rankings_snapshot_date.343f3414e5: /* {"app": "dbt", "dbt_version": "1.12.3", "profile_name": "ffguru", "target_name": "dev", "node_id": "test.ffguru.not_null_stg_nflverse__ff_rankings_snapshot_date.343f3414e5"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+
+
+select snapshot_date
+from "ffguru"."silver"."stg_nflverse__ff_rankings"
+where snapshot_date is null
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m01:27:35.557465 [debug] [Thread-3 (]: SQL status: OK in 0.013 seconds
+[0m01:27:35.557996 [debug] [Thread-4 (]: SQL status: OK in 0.013 seconds
+[0m01:27:35.562378 [debug] [Thread-3 (]: On test.ffguru.not_null_stg_nflverse__ff_rankings_player.dda641e551: ROLLBACK
+[0m01:27:35.563716 [debug] [Thread-4 (]: On test.ffguru.not_null_stg_nflverse__ff_rankings_snapshot_date.343f3414e5: ROLLBACK
+[0m01:27:35.564321 [debug] [Thread-3 (]: On test.ffguru.not_null_stg_nflverse__ff_rankings_player.dda641e551: Close
+[0m01:27:35.565083 [info ] [Thread-3 (]: 2 of 3 PASS not_null_stg_nflverse__ff_rankings_player .......................... [[32mPASS[0m in 0.08s]
+[0m01:27:35.564647 [debug] [Thread-4 (]: On test.ffguru.not_null_stg_nflverse__ff_rankings_snapshot_date.343f3414e5: Close
+[0m01:27:35.565550 [debug] [Thread-3 (]: Finished running node test.ffguru.not_null_stg_nflverse__ff_rankings_player.dda641e551
+[0m01:27:35.566094 [info ] [Thread-4 (]: 3 of 3 PASS not_null_stg_nflverse__ff_rankings_snapshot_date ................... [[32mPASS[0m in 0.08s]
+[0m01:27:35.566794 [debug] [Thread-4 (]: Finished running node test.ffguru.not_null_stg_nflverse__ff_rankings_snapshot_date.343f3414e5
+[0m01:27:35.568524 [debug] [MainThread]: Using duckdb connection "master"
+[0m01:27:35.568861 [debug] [MainThread]: On master: BEGIN
+[0m01:27:35.569104 [debug] [MainThread]: Opening a new connection, currently in state closed
+[0m01:27:35.569918 [debug] [MainThread]: SQL status: OK in 0.001 seconds
+[0m01:27:35.570251 [debug] [MainThread]: On master: COMMIT
+[0m01:27:35.570481 [debug] [MainThread]: Using duckdb connection "master"
+[0m01:27:35.570721 [debug] [MainThread]: On master: COMMIT
+[0m01:27:35.571142 [debug] [MainThread]: SQL status: OK in 0.000 seconds
+[0m01:27:35.571373 [debug] [MainThread]: On master: Close
+[0m01:27:35.571680 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m01:27:35.571891 [debug] [MainThread]: Connection 'model.ffguru.stg_nflverse__ff_rankings' was properly closed.
+[0m01:27:35.572097 [debug] [MainThread]: Connection 'test.ffguru.not_null_stg_nflverse__ff_rankings_player.dda641e551' was properly closed.
+[0m01:27:35.572299 [debug] [MainThread]: Connection 'test.ffguru.not_null_stg_nflverse__ff_rankings_snapshot_date.343f3414e5' was properly closed.
+[0m01:27:35.572576 [info ] [MainThread]: 
+[0m01:27:35.572944 [info ] [MainThread]: Finished running 2 data tests, 1 view model in 0 hours 0 minutes and 0.98 seconds (0.98s).
+[0m01:27:35.574169 [debug] [MainThread]: Command end result
+[0m01:27:35.609536 [debug] [MainThread]: Wrote artifact WritableManifest to /opt/airflow/data/dbt_target/manifest.json
+[0m01:27:35.617911 [debug] [MainThread]: Wrote artifact SemanticManifest to /opt/airflow/data/dbt_target/semantic_manifest.json
+[0m01:27:35.620376 [debug] [MainThread]: Wrote artifact OsiDocument to /opt/airflow/data/dbt_target/osi_document.json
+[0m01:27:35.627038 [debug] [MainThread]: Wrote artifact RunExecutionResult to /opt/airflow/data/dbt_target/run_results.json
+[0m01:27:35.627334 [info ] [MainThread]: 
+[0m01:27:35.627610 [info ] [MainThread]: [32mCompleted successfully[0m
+[0m01:27:35.628012 [info ] [MainThread]: 
+[0m01:27:35.628462 [info ] [MainThread]: Done. PASS=3 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=3
+[0m01:27:35.630472 [debug] [MainThread]: Resource report: {"command_name": "build", "command_success": true, "command_wall_clock_time": 1.985794, "process_in_blocks": "10352", "process_kernel_time": 0.855643, "process_mem_max_rss": "224340", "process_out_blocks": "41210", "process_user_time": 2.846098}
+[0m01:27:35.631564 [debug] [MainThread]: Command `dbt build` succeeded at 01:27:35.631375 after 1.99 seconds
+[0m01:27:35.632222 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0xffff96806750>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0xffff971dfb30>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0xffff96a85520>]}
+[0m01:27:35.632527 [debug] [MainThread]: Flushing usage events
+[0m01:27:36.091081 [debug] [MainThread]: An error was encountered while trying to flush usage events

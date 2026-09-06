@@ -1,0 +1,17 @@
+# Declares the immutable nflverse Parquet snapshots stored in the bronze bucket.
+
+version: 2
+
+sources:
+  - name: nflverse
+    description: Raw snapshots loaded from nflverse into MinIO.
+    tables:
+      - name: ff_rankings
+        description: Draft ranking snapshots returned by nflreadpy.
+        config:
+          external_location: >-
+            read_parquet(
+              's3://{{ env_var("BRONZE_BUCKET") }}/nflverse/ff_rankings/type=draft/snapshot_date=*/ff_rankings.parquet',
+              hive_partitioning = true,
+              union_by_name = true
+            )

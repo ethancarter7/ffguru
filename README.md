@@ -93,3 +93,19 @@ make airflow-dags
 ```
 
 Open the Airflow interface with `make airflow-ui`, select `airflow_learning`, unpause it, and use the play button to trigger a manual run. The Graph view shows the dependency, while each task instance contains its own status and logs.
+
+## dbt and DuckDB
+
+dbt reads bronze Parquet snapshots from MinIO and creates analytics models in a persistent DuckDB database. Staging selects the useful source fields, while `silver.int_ff_rankings__latest_redraft` exposes the newest overall redraft rankings.
+
+```bash
+make dbt-debug
+make dbt-build
+make dbt-preview
+make dbt-preview-latest
+make duckdb-ui
+```
+
+`dbt-debug` validates the profile and database connection, `dbt-build` creates models and runs their tests, and the preview commands display sample staging or latest-redraft rows. `duckdb-ui` opens DuckDB's local browser interface for exploring schemas, previewing data, and running SQL; keep its terminal open while using the interface and press Enter to stop it.
+
+The scheduled `ff_rankings_bronze` Airflow DAG runs `dbt build` after a successful bronze ingestion. The separate Make commands remain useful for development and troubleshooting.

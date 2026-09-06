@@ -1,0 +1,21 @@
+# Configures dbt to persist silver models in DuckDB and read bronze files from MinIO.
+
+ffguru:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: /opt/airflow/data/ffguru.duckdb
+      schema: silver
+      threads: 4
+      extensions:
+        - httpfs
+        - parquet
+      secrets:
+        - type: s3
+          region: us-east-1
+          key_id: "{{ env_var('MINIO_ACCESS_KEY') }}"
+          secret: "{{ env_var('MINIO_SECRET_KEY') }}"
+          endpoint: "{{ env_var('MINIO_DUCKDB_ENDPOINT') }}"
+          url_style: path
+          use_ssl: false

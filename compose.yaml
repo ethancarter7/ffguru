@@ -20,12 +20,17 @@ x-airflow-common: &airflow-common
     AIRFLOW__SCHEDULER__ENABLE_HEALTH_CHECK: "true"
     AIRFLOW__DAG_PROCESSOR__REFRESH_INTERVAL: "30"
     MINIO_ENDPOINT_URL: http://minio:9000
+    MINIO_DUCKDB_ENDPOINT: ${MINIO_DUCKDB_ENDPOINT:-minio:9000}
     MINIO_ACCESS_KEY: ${MINIO_ROOT_USER:-minioadmin}
     MINIO_SECRET_KEY: ${MINIO_ROOT_PASSWORD:-minioadmin}
     BRONZE_BUCKET: ${BRONZE_BUCKET:-bronze}
+    DBT_PROFILES_DIR: /opt/airflow/dbt
+    DBT_TARGET_PATH: /opt/airflow/data/dbt_target
   volumes:
     - ./dags:/opt/airflow/dags
+    - ./dbt:/opt/airflow/dbt
     - airflow_logs:/opt/airflow/logs
+    - ./data:/opt/airflow/data
   user: "${AIRFLOW_UID:-50000}:0"
   networks:
     - data_platform
@@ -153,6 +158,29 @@ services:
         condition: service_healthy
       airflow-init:
         condition: service_completed_successfully
+
+  dbt:
+    image: ${AIRFLOW_IMAGE_NAME:-ffguru-airflow:local}
+    profiles: ["tools"]
+    entrypoint: dbt
+    working_dir: /opt/airflow/dbt
+    environment:
+      MINIO_DUCKDB_ENDPOINT: ${MINIO_DUCKDB_ENDPOINT:-minio:9000}
+      MINIO_ACCESS_KEY: ${MINIO_ROOT_USER:-minioadmin}
+      MINIO_SECRET_KEY: ${MINIO_ROOT_PASSWORD:-minioadmin}
+      BRONZE_BUCKET: ${BRONZE_BUCKET:-bronze}
+      DBT_PROFILES_DIR: /opt/airflow/dbt
+      DBT_LOG_PATH: /opt/airflow/data/dbt_logs
+      DBT_TARGET_PATH: /opt/airflow/data/dbt_target
+    volumes:
+      - ./dbt:/opt/airflow/dbt
+      - ./data:/opt/airflow/data
+    user: "${AIRFLOW_UID:-50000}:0"
+    networks:
+      - data_platform
+    depends_on:
+      minio:
+        condition: service_healthy
 
 volumes:
   postgres_data:

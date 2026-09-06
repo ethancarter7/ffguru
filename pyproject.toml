@@ -13,12 +13,14 @@ requires-python = ">=3.12,<3.13"
 dependencies = [
     "apache-airflow==3.3.1",
     "boto3==1.43.56",
+    "dbt-duckdb>=1.9,<2",
     "nflreadpy>=0.1,<1",
 ]
 
 [tool.uv]
 constraint-dependencies = [
     "botocore==1.43.56",
+    "importlib-metadata>=8,<9",
 ]
 
 [dependency-groups]
