@@ -182,6 +182,34 @@ services:
       minio:
         condition: service_healthy
 
+  rankings-app:
+    image: ${AIRFLOW_IMAGE_NAME:-ffguru-airflow:local}
+    profiles: ["tools"]
+    entrypoint: python
+    command: -m ffguru.personal_rankings.web
+    environment:
+      MINIO_DUCKDB_ENDPOINT: ${MINIO_DUCKDB_ENDPOINT:-minio:9000}
+      MINIO_ACCESS_KEY: ${MINIO_ROOT_USER:-minioadmin}
+      MINIO_SECRET_KEY: ${MINIO_ROOT_PASSWORD:-minioadmin}
+      FFGURU_DATA_DIR: /opt/airflow/data
+      RANKINGS_SECRET_KEY: ${RANKINGS_SECRET_KEY:-local-rankings-secret}
+    ports:
+      - "127.0.0.1:5000:5000"
+    volumes:
+      - ./data:/opt/airflow/data
+    user: "${AIRFLOW_UID:-50000}:0"
+    networks:
+      - data_platform
+    depends_on:
+      minio:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:5000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
 volumes:
   postgres_data:
   minio_data:

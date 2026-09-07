@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Compare Players · FFGuru{% endblock %}
+{% block content %}
+  <section class="page-heading">
+    <div>
+      <p class="eyebrow">Snapshot {{ board.source_snapshot_date }}</p>
+      <h1>Who would you draft?</h1>
+      <p>Choose by preference. Expert rankings stay hidden on this screen.</p>
+    </div>
+    <a class="secondary-button" href="{{ url_for('rankings') }}">View my board</a>
+  </section>
+
+  <section class="progress-panel">
+    <div class="progress-copy">
+      <span>{{ progress.progress_percent }}% first-pass coverage</span>
+      <span>{{ progress.covered_players }}/{{ progress.total_players }} players seen 3 times</span>
+    </div>
+    <div class="progress-track"><div style="width: {{ progress.progress_percent }}%"></div></div>
+    <small>{{ progress.completed_matchups }} completed matchups{% if progress.complete %} · Coverage goal reached{% endif %}</small>
+  </section>
+
+  <section class="matchup-grid">
+    {% for player in [matchup.left, matchup.right] %}
+      <form method="post" action="{{ url_for('choose', matchup_id=matchup.matchup_id) }}">
+        <input type="hidden" name="winner_id" value="{{ player.player_id }}">
+        <button class="player-card" type="submit">
+          <span class="position">{{ player.pos }}</span>
+          <strong>{{ player.player }}</strong>
+          <span>{{ player.team or 'Free agent' }}</span>
+          <span>Bye: {{ player.bye if player.bye is not none else '—' }}</span>
+          <small>Choose {{ player.player }}</small>
+        </button>
+      </form>
+    {% endfor %}
+  </section>
+
+  <section class="comparison-actions">
+    <form method="post" action="{{ url_for('skip', matchup_id=matchup.matchup_id) }}">
+      <button class="text-button" type="submit">Skip this matchup</button>
+    </form>
+    <form method="post" action="{{ url_for('undo') }}">
+      <button class="text-button" type="submit">Undo last decision</button>
+    </form>
+  </section>
+{% endblock %}

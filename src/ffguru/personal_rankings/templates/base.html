@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}FFGuru Rankings{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="{{ url_for('compare') }}">FFGuru</a>
+      <nav>
+        <a href="{{ url_for('compare') }}">Compare</a>
+        <a href="{{ url_for('rankings') }}">Rankings</a>
+        <a href="{{ url_for('reset') }}">Reset</a>
+      </nav>
+    </header>
+    <main>
+      {% for message in get_flashed_messages() %}
+        <div class="flash">{{ message }}</div>
+      {% endfor %}
+      {% block content %}{% endblock %}
+    </main>
+  </body>
+</html>

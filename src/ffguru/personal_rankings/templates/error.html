@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Rankings Unavailable · FFGuru{% endblock %}
+{% block content %}
+  <section class="narrow-panel">
+    <p class="eyebrow">Unable to initialize</p>
+    <h1>The rankings are temporarily unavailable.</h1>
+    <p>{{ message }}</p>
+    <a class="primary-button" href="{{ url_for('compare') }}">Try again</a>
+  </section>
+{% endblock %}

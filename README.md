@@ -109,3 +109,16 @@ make duckdb-ui
 `dbt-debug` validates the profile and database connection, `dbt-build` creates models and runs their tests, and the preview commands display sample staging or latest-redraft rows. `duckdb-ui` opens DuckDB's local browser interface for exploring schemas, previewing data, and running SQL; keep its terminal open while using the interface and press Enter to stop it.
 
 The scheduled `ff_rankings_bronze` Airflow DAG runs `dbt build` after a successful bronze ingestion. The separate Make commands remain useful for development and troubleshooting.
+
+## Personal rankings
+
+The local Flask app freezes the latest 200 QB, RB, WR, and TE rankings into a separate DuckDB database, then builds a personal board from blind pairwise choices.
+
+```bash
+make rankings-ui
+make rankings-export
+make rankings-logs
+make rankings-stop
+```
+
+The comparison screen supports choose, skip, and undo. The rankings screen shows the evolving board, while the CSV export contains every latest intermediate ranking plus a nullable `vs_ecr` column; reset is the only action that replaces the frozen source snapshot.

@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}My Rankings · FFGuru{% endblock %}
+{% macro sort_link(field, label) -%}
+  {% set next_direction = 'desc' if sort_name == field and direction == 'asc' else 'asc' %}
+  <a href="{{ url_for('rankings', sort=field, direction=next_direction) }}">{{ label }}</a>
+{%- endmacro %}
+{% block content %}
+  <section class="page-heading">
+    <div>
+      <p class="eyebrow">Frozen from {{ board.source_snapshot_date }}</p>
+      <h1>Personal rankings</h1>
+      <p>A positive movement value means you rank the player higher than ECR.</p>
+    </div>
+    <a class="primary-button" href="{{ url_for('rankings_csv') }}">Download CSV</a>
+  </section>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>{{ sort_link('personal_rank', 'Rank') }}</th>
+          <th>{{ sort_link('player', 'Player') }}</th>
+          <th>{{ sort_link('pos', 'Pos') }}</th>
+          <th>{{ sort_link('team', 'Team') }}</th>
+          <th>{{ sort_link('bye', 'Bye') }}</th>
+          <th>{{ sort_link('personal_rating', 'Rating') }}</th>
+          <th>{{ sort_link('ecr', 'ECR') }}</th>
+          <th>{{ sort_link('best', 'Best') }}</th>
+          <th>{{ sort_link('worst', 'Worst') }}</th>
+          <th>{{ sort_link('movement_vs_ecr', 'Vs. ECR') }}</th>
+          <th>{{ sort_link('player_id', 'Player ID') }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in rankings %}
+          <tr>
+            <td class="rank">{{ row.personal_rank }}</td>
+            <td>{{ row.player }}</td>
+            <td>{{ row.pos }}</td>
+            <td>{{ row.team or '—' }}</td>
+            <td>{{ row.bye if row.bye is not none else '—' }}</td>
+            <td>{{ '%.1f'|format(row.personal_rating) }}</td>
+            <td>{{ '%.2f'|format(row.ecr) }}</td>
+            <td>{{ row.best if row.best is not none else '—' }}</td>
+            <td>{{ row.worst if row.worst is not none else '—' }}</td>
+            <td class="{{ 'positive' if row.movement_vs_ecr > 0 else 'negative' if row.movement_vs_ecr < 0 else '' }}">{{ '%+.2f'|format(row.movement_vs_ecr) }}</td>
+            <td>{{ row.player_id }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

@@ -1,6 +1,6 @@
 # Provides short commands for managing and checking the local Docker services.
 
-.PHONY: setup sync lock lint rankings-preview rankings-ingest dbt-debug dbt-build dbt-preview dbt-preview-latest duckdb-ui build up down status logs config minio-ui airflow-init airflow-ui airflow-logs airflow-dags
+.PHONY: setup sync lock lint test rankings-preview rankings-ingest rankings-ui rankings-export rankings-stop rankings-logs dbt-debug dbt-build dbt-preview dbt-preview-latest duckdb-ui build up down status logs config minio-ui airflow-init airflow-ui airflow-logs airflow-dags
 
 setup:
 	uv python install 3.12
@@ -15,12 +15,29 @@ lock:
 lint:
 	uv run ruff check .
 
+test:
+	uv run pytest
+
 rankings-preview:
 	uv run python -c 'from ffguru.tasks.ingestion.ff_rankings import load_draft_rankings; rankings = load_draft_rankings(); print(rankings.head()); print(f"rows={rankings.height}, columns={rankings.width}")'
 
 rankings-ingest: build
 	docker compose up minio-init
 	docker compose run --rm --no-deps --entrypoint python airflow-api-server -c 'from ffguru.tasks.ingestion.ff_rankings import ingest_draft_rankings; print(ingest_draft_rankings())'
+
+rankings-ui: build
+	docker compose up -d --no-build --wait rankings-app
+	open http://localhost:5000
+
+rankings-export: build
+	docker compose up -d --no-build --wait rankings-app
+	curl --fail --silent --show-error --output data/latest_ff_rankings_with_personal.csv http://localhost:5000/rankings.csv
+
+rankings-stop:
+	docker compose stop rankings-app
+
+rankings-logs:
+	docker compose logs -f rankings-app
 
 dbt-debug: build
 	docker compose up minio-init

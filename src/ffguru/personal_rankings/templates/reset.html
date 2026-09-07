@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Reset Board · FFGuru{% endblock %}
+{% block content %}
+  <section class="narrow-panel">
+    <p class="eyebrow">Destructive action</p>
+    <h1>Reset from the latest rankings?</h1>
+    <p>This permanently removes every personal comparison and creates a fresh board from the newest dbt snapshot.</p>
+    <form method="post">
+      <button class="danger-button" type="submit">Reset my board</button>
+      <a class="secondary-button" href="{{ url_for('compare') }}">Cancel</a>
+    </form>
+  </section>
+{% endblock %}
