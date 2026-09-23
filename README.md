@@ -110,6 +110,19 @@ make duckdb-ui
 
 The scheduled `ff_rankings_bronze` Airflow DAG runs `dbt build` after a successful bronze ingestion. The separate Make commands remain useful for development and troubleshooting.
 
+## Player data ingestion
+
+The `player_data_bronze` Airflow DAG runs every Wednesday at 12:00 UTC. Its two independent tasks preserve the current season's raw weekly player statistics and the fantasy-football player ID map in MinIO; dbt transformations for these datasets will be added in the next checkpoint.
+
+Preview the source data without writing it, or manually create today's snapshots:
+
+```bash
+make player-data-preview
+make player-data-ingest
+```
+
+Player statistics are stored under `bronze/nflverse/player_stats/summary_level=week/season=<season>/snapshot_date=<date>/`, while player IDs are stored under `bronze/nflverse/ff_playerids/snapshot_date=<date>/`. Existing snapshots are not overwritten.
+
 ## Personal rankings
 
 The local Flask app freezes the latest 200 QB, RB, WR, and TE rankings into a separate DuckDB database, then builds a personal board from blind pairwise choices.
