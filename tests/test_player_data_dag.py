@@ -20,14 +20,26 @@ def test_player_data_dag_configuration():
     assert str(dag.schedule) == "0 12 * * 3"
     assert dag.catchup is False
     assert dag.max_active_runs == 1
-    assert set(dag.task_ids) == {"ingest_player_stats", "ingest_player_ids"}
+    assert set(dag.task_ids) == {
+        "ingest_player_stats",
+        "ingest_player_ids",
+        "build_player_stats_models",
+    }
 
 
 def test_player_data_tasks_are_parallel_and_retryable():
     dag = _load_dag_module().player_data_bronze()
 
-    for task_id in ("ingest_player_stats", "ingest_player_ids"):
-        task = dag.get_task(task_id)
-        assert task.upstream_task_ids == set()
-        assert task.downstream_task_ids == set()
-        assert task.retries == 2
+    stats_task = dag.get_task("ingest_player_stats")
+    ids_task = dag.get_task("ingest_player_ids")
+    dbt_task = dag.get_task("build_player_stats_models")
+
+    assert stats_task.upstream_task_ids == set()
+    assert stats_task.downstream_task_ids == {"build_player_stats_models"}
+    assert stats_task.retries == 2
+    assert ids_task.upstream_task_ids == set()
+    assert ids_task.downstream_task_ids == set()
+    assert ids_task.retries == 2
+    assert dbt_task.upstream_task_ids == {"ingest_player_stats"}
+    assert dbt_task.downstream_task_ids == set()
+    assert dbt_task.retries == 1

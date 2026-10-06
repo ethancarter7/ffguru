@@ -18,3 +18,17 @@ models:
         description: Player or team-defense name supplied by the ranking source.
         data_tests:
           - not_null
+  - name: stg_nflverse__player_stats
+    description: Requested player-stat fields from every immutable weekly snapshot.
+    columns:
+      - name: snapshot_date
+        description: UTC logical date assigned to the immutable ingestion snapshot.
+        data_tests:
+          - not_null
+      - name: player_id
+        description: NFL GSIS identifier supplied with the player statistics.
+      - name: game_id
+        description: nflverse identifier for the game represented by the weekly row.
+      - name: position
+        description: Player position supplied by nflverse.
+      

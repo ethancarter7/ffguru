@@ -15,3 +15,12 @@ sources:
               hive_partitioning = true,
               union_by_name = true
             )
+      - name: player_stats
+        description: Current-season weekly player-stat snapshots returned by nflreadpy.
+        config:
+          external_location: >-
+            read_parquet(
+              's3://{{ env_var("BRONZE_BUCKET") }}/nflverse/player_stats/summary_level=week/season=*/snapshot_date=*/player_stats.parquet',
+              hive_partitioning = true,
+              union_by_name = true
+            )

@@ -28,7 +28,7 @@ def ff_rankings_bronze():
     def build_silver_models() -> None:
         from ffguru.tasks.transformation.dbt import build_dbt_project
 
-        build_dbt_project()
+        build_dbt_project(select="+int_ff_rankings__latest_redraft")
 
     ingest_rankings() >> build_silver_models()
 

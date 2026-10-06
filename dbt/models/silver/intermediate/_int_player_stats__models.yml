@@ -1,0 +1,51 @@
+# Documents and tests the latest fantasy-relevant player-stat model.
+
+version: 2
+
+models:
+  - name: int_player_stats__latest
+    description: Player-game statistics from the newest snapshot for standard fantasy positions.
+    columns:
+      - name: snapshot_date
+        description: Latest available ingestion snapshot date.
+        data_tests:
+          - not_null
+      - name: player_id
+        description: NFL GSIS identifier supplied with the player statistics.
+        data_tests:
+          - not_null
+      - name: game_id
+        description: nflverse identifier for the game represented by the weekly row.
+        data_tests:
+          - not_null
+      - name: season
+        description: NFL season associated with the game.
+        data_tests:
+          - not_null
+      - name: week
+        description: NFL week associated with the game.
+        data_tests:
+          - not_null
+      - name: season_type
+        description: Regular-season or postseason classification.
+        data_tests:
+          - not_null
+      - name: position
+        description: Fantasy-relevant player position.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['QB', 'RB', 'WR', 'TE', 'K']
+      - name: fg_made
+        description: Successful field goals in the game.
+      - name: fg_att
+        description: Field-goal attempts in the game.
+      - name: fg_missed
+        description: Missed field goals in the game.
+      - name: fg_blocked
+        description: Blocked field goals in the game.
+      - name: fg_long
+        description: Longest successful field goal in the game.
+      - name: fg_pct
+        description: Field-goal success percentage for the game.
