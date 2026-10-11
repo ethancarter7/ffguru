@@ -41,7 +41,7 @@ player-data-ingest: build
 	docker compose up minio-init
 	docker compose run --rm --no-deps --entrypoint python airflow-api-server -c 'from ffguru.tasks.ingestion.player_stats import ingest_weekly_player_stats; from ffguru.tasks.ingestion.ff_player_ids import ingest_ff_player_ids; print(ingest_weekly_player_stats()); print(ingest_ff_player_ids())'
 
-# Starts the personal rankings app and opens it in the browser.
+# Starts the analytics and personal rankings site, then opens it in the browser.
 rankings-ui: build
 	docker compose up -d --no-build --wait rankings-app
 	open http://localhost:5000

@@ -1,0 +1,65 @@
+# Documents and tests the five position-specific player-week ranking marts.
+
+version: 2
+
+models:
+  - name: mart_qb_week_rankings
+    description: Weekly and season-to-date quarterback passing, rushing, and PPR rankings.
+    columns:
+      - name: player_id
+        data_tests: [not_null]
+      - name: week
+        data_tests: [not_null]
+      - name: position
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['QB']
+  - name: mart_rb_week_rankings
+    description: Weekly and season-to-date running back production and opportunity rankings.
+    columns:
+      - name: player_id
+        data_tests: [not_null]
+      - name: week
+        data_tests: [not_null]
+      - name: position
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['RB']
+  - name: mart_wr_week_rankings
+    description: Weekly and season-to-date wide receiver production and usage rankings.
+    columns:
+      - name: player_id
+        data_tests: [not_null]
+      - name: week
+        data_tests: [not_null]
+      - name: position
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['WR']
+  - name: mart_te_week_rankings
+    description: Weekly and season-to-date tight end production and usage rankings.
+    columns:
+      - name: player_id
+        data_tests: [not_null]
+      - name: week
+        data_tests: [not_null]
+      - name: position
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['TE']
+  - name: mart_k_week_rankings
+    description: Weekly and season-to-date kicker production and field-goal rankings.
+    columns:
+      - name: player_id
+        data_tests: [not_null]
+      - name: week
+        data_tests: [not_null]
+      - name: position
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['K']

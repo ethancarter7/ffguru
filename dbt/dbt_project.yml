@@ -17,3 +17,11 @@ models:
         +materialized: view
       intermediate:
         +materialized: view
+    gold:
+      +schema: gold
+      facts:
+        +materialized: table
+      intermediate:
+        +materialized: view
+      marts:
+        +materialized: table

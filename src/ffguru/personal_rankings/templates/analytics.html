@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block title %}Analytics · FFGuru{% endblock %}
+{% macro leaderboard(title, rows, metric, empty_message='No ranked players are available.') -%}
+  <section class="leaderboard-panel">
+    <h2>{{ title }}</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Rank</th><th>Player</th><th>Team</th><th>{{ metric.label }}</th></tr>
+        </thead>
+        <tbody>
+          {% for row in rows %}
+            <tr>
+              <td class="rank">{{ row.metric_rank }}</td>
+              <td>
+                <a class="player-name" href="{{ url_for('analytics_player', player_id=row.player_id, season=context.season, season_type=context.season_type, week=context.week) }}">
+                  {% if row.headshot_url %}
+                    <img class="player-headshot" src="{{ row.headshot_url }}" alt="" loading="lazy">
+                  {% else %}
+                    <span class="player-headshot-fallback">{{ position }}</span>
+                  {% endif %}
+                  <span class="player-link">{{ row.player_display_name }}</span>
+                </a>
+              </td>
+              <td>{{ row.team or '—' }}</td>
+              <td>{{ format_metric(row.metric_value, metric.key) }}</td>
+            </tr>
+          {% else %}
+            <tr><td colspan="4">{{ empty_message }}</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+{%- endmacro %}
+{% block content %}
+  <section class="page-heading analytics-heading">
+    <div>
+      <p class="eyebrow">Snapshot {{ context.snapshot_date }}</p>
+      <h1>Player analytics</h1>
+      <p>{{ context.season }} {{ context.season_type }} · Through week {{ context.week }}</p>
+    </div>
+    <div class="freshness-card">
+      <span>Latest loaded week</span>
+      <strong>{{ context.latest_week }}</strong>
+    </div>
+  </section>
+
+  <form class="filter-panel" method="get" action="{{ url_for('analytics') }}">
+    <label>Season
+      <select name="season">
+        {% for season in context.seasons %}<option value="{{ season }}" {{ 'selected' if season == context.season }}>{{ season }}</option>{% endfor %}
+      </select>
+    </label>
+    <label>Season type
+      <select name="season_type">
+        {% for season_type in context.season_types %}<option value="{{ season_type }}" {{ 'selected' if season_type == context.season_type }}>{{ season_type }}</option>{% endfor %}
+      </select>
+    </label>
+    <label>Week
+      <select name="week">
+        {% for week in context.weeks %}<option value="{{ week }}" {{ 'selected' if week == context.week }}>Week {{ week }}</option>{% endfor %}
+      </select>
+    </label>
+    <label>Position
+      <select name="position">
+        {% for option in positions %}<option value="{{ option }}" {{ 'selected' if option == position }}>{{ option }}</option>{% endfor %}
+      </select>
+    </label>
+    <label>Metric
+      <select name="metric">
+        {% for metric in metrics %}<option value="{{ metric.key }}" {{ 'selected' if metric.key == selected_metric.key }}>{{ metric.label }}</option>{% endfor %}
+      </select>
+    </label>
+    <label>View
+      <select name="scope">
+        <option value="week" {{ 'selected' if scope == 'week' }}>Selected week</option>
+        <option value="season" {{ 'selected' if scope == 'season' }}>Season to date</option>
+      </select>
+    </label>
+    <button class="primary-button" type="submit">Apply filters</button>
+  </form>
+
+  <div class="leaderboard-grid">
+    {{ leaderboard(position ~ ' weekly PPR', weekly_ppr, metrics[0]) }}
+    {{ leaderboard(position ~ ' season-to-date PPR', season_ppr, metrics[0]) }}
+  </div>
+
+  {{ leaderboard(
+    position ~ ' ' ~ selected_metric.label ~ (' — season to date' if scope == 'season' else ' — week ' ~ context.week),
+    metric_leaders,
+    selected_metric
+  ) }}
+{% endblock %}

@@ -11,7 +11,7 @@ from airflow.sdk import dag, get_current_context, task
     start_date=datetime(2026, 1, 1, tzinfo=UTC),
     catchup=False,
     max_active_runs=1,
-    tags=["bronze", "silver", "nflverse", "dbt", "player-data"],
+    tags=["bronze", "silver", "gold", "nflverse", "dbt", "player-data"],
 )
 def player_data_bronze():
     @task(retries=2, retry_delay=timedelta(minutes=5))
@@ -36,7 +36,7 @@ def player_data_bronze():
     def build_player_stats_models() -> None:
         from ffguru.tasks.transformation.dbt import build_dbt_project
 
-        build_dbt_project(select="+int_player_stats__latest")
+        build_dbt_project(select="+fct_player_week_stats+")
 
     ingest_player_stats() >> build_player_stats_models()
     ingest_player_ids()

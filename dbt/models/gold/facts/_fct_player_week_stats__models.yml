@@ -1,0 +1,33 @@
+# Documents and tests the analytics-ready player-week fact table.
+
+version: 2
+
+models:
+  - name: fct_player_week_stats
+    description: Latest fantasy-relevant player statistics with counting nulls normalized to zero.
+    columns:
+      - name: snapshot_date
+        description: Ingestion date of the source snapshot.
+        data_tests: [not_null]
+      - name: player_id
+        description: NFL GSIS player identifier.
+        data_tests: [not_null]
+      - name: season
+        description: NFL season.
+        data_tests: [not_null]
+      - name: season_type
+        description: Regular-season or postseason classification.
+        data_tests: [not_null]
+      - name: week
+        description: NFL week.
+        data_tests: [not_null]
+      - name: position
+        description: Fantasy position.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['QB', 'RB', 'WR', 'TE', 'K']
+      - name: game_id
+        description: nflverse game identifier.
+        data_tests: [not_null]

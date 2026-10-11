@@ -1,0 +1,45 @@
+-- Ensures counting and total fields are normalized to zero instead of null.
+
+select *
+from {{ ref('fct_player_week_stats') }}
+where completions is null
+    or attempts is null
+    or passing_yards is null
+    or passing_tds is null
+    or passing_interceptions is null
+    or sacks_suffered is null
+    or sack_yards_lost is null
+    or sack_fumbles is null
+    or passing_air_yards is null
+    or passing_yards_after_catch is null
+    or passing_first_downs is null
+    or passing_10 is null
+    or passing_16 is null
+    or passing_20 is null
+    or passing_40 is null
+    or carries is null
+    or rushing_yards is null
+    or rushing_tds is null
+    or rushing_fumbles is null
+    or rushing_first_downs is null
+    or rushing_10 is null
+    or rushing_12 is null
+    or rushing_20 is null
+    or rushing_40 is null
+    or receptions is null
+    or targets is null
+    or receiving_yards is null
+    or receiving_tds is null
+    or receiving_fumbles is null
+    or receiving_air_yards is null
+    or receiving_yards_after_catch is null
+    or receiving_first_downs is null
+    or receiving_10 is null
+    or receiving_16 is null
+    or receiving_20 is null
+    or receiving_40 is null
+    or fg_made is null
+    or fg_att is null
+    or fg_missed is null
+    or fg_blocked is null
+    or fantasy_points_ppr is null

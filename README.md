@@ -112,7 +112,7 @@ The scheduled `ff_rankings_bronze` Airflow DAG runs `dbt build` after a successf
 
 ## Player data ingestion
 
-The `player_data_bronze` Airflow DAG runs every Wednesday at 12:00 UTC. Its two independent tasks preserve the current season's raw weekly player statistics and the fantasy-football player ID map in MinIO; dbt transformations for these datasets will be added in the next checkpoint.
+The `player_data_bronze` Airflow DAG runs every Wednesday at 12:00 UTC. Its two ingestion tasks preserve the current season's raw weekly player statistics and the fantasy-football player ID map in MinIO. Successful player-stat ingestion builds the associated silver models, gold fact, and position ranking marts.
 
 Preview the source data without writing it, or manually create today's snapshots:
 
@@ -122,6 +122,12 @@ make player-data-ingest
 ```
 
 Player statistics are stored under `bronze/nflverse/player_stats/summary_level=week/season=<season>/snapshot_date=<date>/`, while player IDs are stored under `bronze/nflverse/ff_playerids/snapshot_date=<date>/`. Existing snapshots are not overwritten.
+
+## Gold player analytics
+
+`gold.fct_player_week_stats` stores the latest analytics-ready player-week statistics. The five `gold.mart_<position>_week_rankings` tables provide weekly and season-to-date dense rankings for QB, RB, WR, TE, and K metrics; missing game weeks preserve cumulative rankings while leaving weekly ranks empty.
+
+The running back mart also calculates carries plus targets as opportunities and measures each player's share of his team's RB opportunities. Open `make duckdb-ui` to query the fact and marts directly.
 
 ## Personal rankings
 
@@ -135,3 +141,5 @@ make rankings-stop
 ```
 
 The comparison screen supports choose, skip, and undo. The rankings screen shows the evolving board, while the CSV export contains every latest intermediate ranking plus a nullable `vs_ecr` column; reset is the only action that replaces the frozen source snapshot.
+
+The Analytics tab reads the gold position marts directly from `ffguru.duckdb`. It provides weekly and season-to-date PPR leaderboards, selectable position metrics, and player pages with PPR trends and game logs; close DuckDB UI before opening analytics because DuckDB permits only one process to hold the database lock.

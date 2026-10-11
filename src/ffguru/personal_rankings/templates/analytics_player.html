@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}{{ player.player_display_name }} · FFGuru{% endblock %}
+{% block content %}
+  <a class="back-link" href="{{ url_for('analytics', position=player.position, season=context.season, season_type=context.season_type, week=context.week) }}">← Back to analytics</a>
+  <section class="player-profile-heading">
+    {% if player.headshot_url %}<img src="{{ player.headshot_url }}" alt="{{ player.player_display_name }}">{% endif %}
+    <div>
+      <p class="eyebrow">{{ player.position }} · {{ player.team or 'No team' }}</p>
+      <h1>{{ player.player_display_name }}</h1>
+      <p>{{ context.season }} {{ context.season_type }} season through week {{ context.week }}</p>
+    </div>
+  </section>
+
+  <div class="summary-grid">
+    <div class="summary-card"><span>Season PPR</span><strong>{{ format_metric(player.latest.season_to_date_fantasy_points_ppr, 'fantasy_points_ppr') }}</strong></div>
+    <div class="summary-card"><span>Position rank</span><strong>#{{ player.latest.season_to_date_fantasy_points_ppr_rank }}</strong></div>
+    <div class="summary-card"><span>Latest team</span><strong>{{ player.latest.team or '—' }}</strong></div>
+  </div>
+
+  <section class="analytics-section">
+    <div class="section-heading">
+      <h2>Weekly PPR trend</h2>
+      <span>Position rank shown at right</span>
+    </div>
+    <div class="trend-chart">
+      {% for row in player.game_log %}
+        <div class="trend-row">
+          <span>W{{ row.week }}</span>
+          <div class="trend-track"><div style="width: {{ row.trend_percent }}%"></div></div>
+          <strong>{{ format_metric(row.fantasy_points_ppr, 'fantasy_points_ppr') if row.played_this_week else 'Bye/inactive' }}</strong>
+          <small>{{ '#' ~ row.fantasy_points_ppr_week_rank if row.fantasy_points_ppr_week_rank is not none else '—' }}</small>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="analytics-section">
+    <h2>Game log</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Week</th><th>Team</th><th>Opponent</th><th>PPR</th><th>Pos. rank</th>
+            {% for metric in player.profile_metrics %}<th>{{ metric.label }}</th>{% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in player.game_log %}
+            <tr class="{{ 'inactive-row' if not row.played_this_week }}">
+              <td>{{ row.week }}</td>
+              <td>{{ row.team or '—' }}</td>
+              <td>{{ row.opponent_team or '—' }}</td>
+              <td>{{ format_metric(row.fantasy_points_ppr, 'fantasy_points_ppr') }}</td>
+              <td>{{ row.fantasy_points_ppr_week_rank or '—' }}</td>
+              {% for metric in player.profile_metrics %}<td>{{ format_metric(row[metric.key], metric.key) }}</td>{% endfor %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+{% endblock %}
